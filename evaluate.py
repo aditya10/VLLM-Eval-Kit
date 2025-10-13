@@ -23,7 +23,7 @@ import logging
 from benchmarks import BenchmarkConfig
 from custom_prompts import PROMPTS_EXTRACTS, create_prompt
 from vision_process import process_vision_info
-from metrics import exact_match_hf_evaluate
+from metrics import exact_match_hf_evaluate, gpt_judge_metric, llama_judge_metric
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -329,17 +329,26 @@ class VLLMEvaluator:
                 predicted_answer = prediction["final_answer"]
                 ground_truth_answers = item["answers"]
                 
+                metric_list = config['metric'].split('+')
+                match_score = {}
                 # Calculate accuracy based on metric type
-                if config['metric'] == 'exact_match':
-                    match_score = exact_match_hf_evaluate([predicted_answer]*len(ground_truth_answers), ground_truth_answers, ignore_case=True, ignore_punctuation=True)["exact_match"]
+                if 'exact_match' in metric_list:
+                    match_score.update(exact_match_hf_evaluate([predicted_answer]*len(ground_truth_answers), ground_truth_answers, ignore_case=True, ignore_punctuation=True))
+                
+                if 'gpt_judge' in metric_list:
+                    match_score.update(gpt_judge_metric(item["question"], predicted_answer, ground_truth_answers, model='gpt-4o-mini'))
+
+                if 'llama_judge' in metric_list:
+                    match_score.update(llama_judge_metric(item["question"], predicted_answer, ground_truth_answers))
+
                 else:
                     logger.warning(f"Unsupported metric: {config['metric']}, defaulting to exact_match")
-                    match_score = exact_match_hf_evaluate([predicted_answer]*len(ground_truth_answers), ground_truth_answers, ignore_case=True, ignore_punctuation=True)["exact_match"]
+                    match_score.update(exact_match_hf_evaluate([predicted_answer]*len(ground_truth_answers), ground_truth_answers, ignore_case=True, ignore_punctuation=True)["exact_match"])
                 
                 print(match_score)
                 
                 is_correct = False
-                if match_score > 0:
+                if any([s > 0 for s in match_score.values()]):
                     is_correct = True
                     correct_predictions += 1
                 total_predictions += 1

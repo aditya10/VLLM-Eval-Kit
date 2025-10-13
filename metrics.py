@@ -1,6 +1,22 @@
 import re
 import string
 import numpy as np
+from openai import OpenAI
+import torch
+from transformers import pipeline
+from keys import OPENAI_API_KEY
+
+model_id = "/model-weights/Llama-3.2-3B-Instruct"
+pipe = pipeline(
+    "text-generation",
+    model=model_id,
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
+)
+
+
+client = OpenAI(api_key=OPENAI_API_KEY)
+
 
 # Stop words for word overlap matching
 # Filters out common function words and VQA-specific filler words
@@ -97,3 +113,82 @@ def exact_match_hf_evaluate(
     score_list = predictions == references
 
     return {"exact_match": np.mean(score_list)}
+
+def parse_llm_match_score(response_text):
+
+    import json
+    try:
+        score_data = json.loads(response_text)
+        score = float(score_data.get('score', 0.0))
+    except (json.JSONDecodeError, ValueError):
+        # Fallback: try to extract score with regex
+        import re
+        score_match = re.search(r'"score"?\s*:\s*([0-9.]+)', response_text)
+        if score_match:
+            score = float(score_match.group(1))
+        else:
+            score = 0.0
+    
+    # Ensure score is within valid range [0, 1]
+    score = max(0.0, min(1.0, score))
+    return score
+
+
+
+def gpt_judge_metric(question, prediction, references, model='gpt-4o-mini'):
+
+    prompt = f"""You are responsible for proofreading the answers, you need to give a score to the model's answer by referring to the standard answer set, based on the given question. The full score is 1 point and the minimum score is 0 points. Please output the score in the json form "{{"score": <score>}}". The evaluation criteria require that the closer the model's answer is to any of the standard answers, the higher the score.
+            Question: {question} 
+            Standard answer: {references} 
+            Model's answer: {prediction}"""
+
+    messages = [
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.0,  # For consistent scoring
+            max_tokens=100    # Short response expected
+        )
+        
+        # Extract the response content
+        response_text = response.choices[0].message.content.strip()
+        
+        # Try to parse JSON response
+        score = parse_llm_match_score(response_text)
+        
+        
+        return {"gpt_judge_score": score}
+        
+    except Exception as e:
+        print(f"Error in GPT judge evaluation: {e}")
+        return {"gpt_judge_score": 0.0}
+    
+
+def llama_judge_metric(question, prediction, references):
+
+    prompt = f"""You are responsible for proofreading the answers, you need to give a score to the model's answer by referring to the standard answer set, based on the given question. The full score is 1 point and the minimum score is 0 points. Please output the score in the json form "{{"score": <score>}}". The evaluation criteria require that the closer the model's answer is to any of the standard answers, the higher the score. Even if the answer is not in the standard answer set, if it is a rephrased answer (or means the same thing), you can give a high score.
+            Question: {question} 
+            Standard answer: {references} 
+            Model's answer: {prediction}"""
+        
+    messages = [
+        {"role": "user", "content": prompt},
+    ]
+    outputs = pipe(
+        messages,
+        max_new_tokens=256,
+    )
+
+    response_text = outputs[0]["generated_text"][-1]['content']
+    print(response_text)
+
+    score = parse_llm_match_score(response_text)
+
+    return {"llama_judge_score": score}
