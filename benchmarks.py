@@ -11,7 +11,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'multiple_choice_answer',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'exact_match',
             'description': 'VQA v2.0 dataset'
         },
         'gqa': {
@@ -24,7 +24,7 @@ class BenchmarkConfig:
             'image_id_key': 'imageId',  # Key to match with images
             'answer_key': 'answer',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'exact_match',
             'description': 'GQA dataset',
             'requires_merge': True  # Flag to indicate this dataset needs special handling
         },
@@ -35,7 +35,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'answers',
             'post_prompt': '\nWhen the provided information is insufficient, respond with \'Unanswerable\'.\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'exact_match',
             'description': 'VizWiz-VQA dataset'
         },
         'textvqa': {
@@ -45,7 +45,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'answers',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'exact_match',
             'description': 'TextVQA dataset'
         },
         'infovqa': {
@@ -56,7 +56,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'answers',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'anls',
             'description': 'InfoVQA dataset'
         },
         'pope': {
@@ -65,8 +65,8 @@ class BenchmarkConfig:
             'question_key': 'question',
             'image_key': 'image',
             'answer_key': 'answer',
-            'post_prompt': '\nAnswer with Yes or No.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match', #TODO:Fix metric
             'description': 'POPE (Polling-based Object Probing Evaluation) dataset'
         },
         'okvqa': {
@@ -76,7 +76,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'answers',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge+llama_judge',
+            'metric': 'exact_match',
             'description': 'OK-VQA val2014 dataset'
         },
     }

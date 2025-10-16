@@ -48,7 +48,7 @@ class VLLMEvaluator:
             max_new_tokens: Maximum number of tokens to generate
             task: Task type (grit, vanilla, sg)
         """
-        logger.info(f"Loading GRIT model: {model_id}")
+        logger.info(f"Loading model: {model_id}")
         
         self.model_id = model_id
         self.batch_size = batch_size
@@ -67,14 +67,17 @@ class VLLMEvaluator:
         
         # Set padding side to left for Flash Attention compatibility
         self.processor.tokenizer.padding_side = 'left'
+        self.model.generation_config.use_cache = True
+        #self.model.generation_config.pad_token_id = self.processor.tokenizer.eos_token_id
         
         # Configure generation settings
         self.model.generation_config.max_new_tokens = max_new_tokens
-        self.model.generation_config.temperature = 0.001
-        self.model.generation_config.top_k = 1
-        self.model.generation_config.top_p = 0.0
-        self.model.generation_config.use_cache = True
-        #self.model.generation_config.pad_token_id = self.processor.tokenizer.eos_token_id
+
+        if task == "grit":
+            self.model.generation_config.temperature = 0.001
+            self.model.generation_config.top_k = 1
+            self.model.generation_config.top_p = 0.0
+        
 
         # Load custom prompts and extractors
         if task not in PROMPTS_EXTRACTS:
@@ -298,6 +301,9 @@ class VLLMEvaluator:
                 "question": sample.get(config['question_key'], ""),
                 "answers": sample.get(config['answer_key'], [])
             }
+            #If GT is a string, convert to list
+            if not isinstance(batch_item["answers"], list):
+                batch_item["answers"] = [batch_item["answers"]]
             batch_data.append(batch_item)
             
             # Create batch when batch_size is reached
@@ -340,12 +346,6 @@ class VLLMEvaluator:
 
                 if 'llama_judge' in metric_list:
                     match_score.update(llama_judge_metric(item["question"], predicted_answer, ground_truth_answers))
-
-                else:
-                    logger.warning(f"Unsupported metric: {config['metric']}, defaulting to exact_match")
-                    match_score.update(exact_match_hf_evaluate([predicted_answer]*len(ground_truth_answers), ground_truth_answers, ignore_case=True, ignore_punctuation=True)["exact_match"])
-                
-                print(match_score)
                 
                 is_correct = False
                 if any([s > 0 for s in match_score.values()]):
@@ -395,7 +395,7 @@ class VLLMEvaluator:
         }
         
         # Save results
-        output_file = os.path.join(output_dir, f"grit_{benchmark}_evaluation_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        output_file = os.path.join(output_dir, f"eval_{limit}_{benchmark}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
         with open(output_file, 'w') as f:
             json.dump(evaluation_results, f, indent=2)
         

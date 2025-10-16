@@ -2,18 +2,7 @@ import re
 import string
 import numpy as np
 from openai import OpenAI
-import torch
-from transformers import pipeline
 from keys import OPENAI_API_KEY
-
-model_id = "/model-weights/Llama-3.2-3B-Instruct"
-pipe = pipeline(
-    "text-generation",
-    model=model_id,
-    torch_dtype=torch.bfloat16,
-    device_map="auto",
-)
-
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -84,9 +73,9 @@ def exact_match_hf_evaluate(
     predictions,
     references,
     regexes_to_ignore=None,
-    ignore_case=False,
-    ignore_punctuation=False,
-    ignore_numbers=False,
+    ignore_case=True,
+    ignore_punctuation=True,
+    ignore_numbers=True,
 ):
     if regexes_to_ignore is not None:
         for s in regexes_to_ignore:
@@ -171,24 +160,42 @@ def gpt_judge_metric(question, prediction, references, model='gpt-4o-mini'):
         return {"gpt_judge_score": 0.0}
     
 
-def llama_judge_metric(question, prediction, references):
+def levenshtein_distance(s1, s2):
+    if len(s1) > len(s2):
+        s1, s2 = s2, s1
 
-    prompt = f"""You are responsible for proofreading the answers, you need to give a score to the model's answer by referring to the standard answer set, based on the given question. The full score is 1 point and the minimum score is 0 points. Please output the score in the json form "{{"score": <score>}}". The evaluation criteria require that the closer the model's answer is to any of the standard answers, the higher the score. Even if the answer is not in the standard answer set, if it is a rephrased answer (or means the same thing), you can give a high score.
-            Question: {question} 
-            Standard answer: {references} 
-            Model's answer: {prediction}"""
-        
-    messages = [
-        {"role": "user", "content": prompt},
-    ]
-    outputs = pipe(
-        messages,
-        max_new_tokens=256,
-    )
+    distances = range(len(s1) + 1)
+    for i2, c2 in enumerate(s2):
+        distances_ = [i2 + 1]
+        for i1, c1 in enumerate(s1):
+            if c1 == c2:
+                distances_.append(distances[i1])
+            else:
+                distances_.append(1 + min((distances[i1], distances[i1 + 1], distances_[-1])))
+        distances = distances_
+    return distances[-1]
 
-    response_text = outputs[0]["generated_text"][-1]['content']
-    print(response_text)
+def anls(
+    references,
+    predictions,
+    thresh_hold=0.5,
+):
+    """https://github.com/QwenLM/Qwen-VL/blob/master/eval_mm/infographicsvqa_eval.py"""
+    values = []
+    # Unwrap predictions if it's a nested list
+    pred = predictions[0] if isinstance(predictions[0], str) else predictions[0][0]
 
-    score = parse_llm_match_score(response_text)
+    for answer in references:
+        # preprocess both the answers - gt and prediction
+        gt_answer = " ".join(answer.strip().lower().split())
+        det_answer = " ".join(pred.strip().lower().split())
 
-    return {"llama_judge_score": score}
+        dist = levenshtein_distance(gt_answer, det_answer)
+        length = max(len(answer.upper()), len(pred.upper()))
+        values.append(0.0 if length == 0 else float(dist) / float(length))
+
+    question_result = 1 - min(values)
+
+    if question_result < thresh_hold:
+        question_result = 0
+    return {"anls": question_result}
