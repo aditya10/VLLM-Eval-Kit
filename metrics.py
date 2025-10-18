@@ -100,8 +100,11 @@ def exact_match_hf_evaluate(
         references = np.char.translate(references, table=repl_table)
 
     score_list = predictions == references
+    
+    # VQA score is given by min(#humans_match_pred/3, 1)
+    vqa_score = min(np.sum(score_list) / 3.0, 1.0)
 
-    return {"exact_match": np.mean(score_list)}
+    return {"exact_match": np.mean(score_list), 'vqa_score': vqa_score}
 
 def parse_llm_match_score(response_text):
 

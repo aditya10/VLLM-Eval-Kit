@@ -23,7 +23,7 @@ import logging
 from benchmarks import BenchmarkConfig
 from custom_prompts import PROMPTS_EXTRACTS, create_prompt
 from vision_process import process_vision_info
-from metrics import exact_match_hf_evaluate, gpt_judge_metric, llama_judge_metric
+from metrics import exact_match_hf_evaluate, gpt_judge_metric
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -77,7 +77,12 @@ class VLLMEvaluator:
             self.model.generation_config.temperature = 0.001
             self.model.generation_config.top_k = 1
             self.model.generation_config.top_p = 0.0
-        
+        if task == "sg":
+            self.model.generation_config.max_new_tokens = 2048
+            self.model.generation_config.temperature = 0.001
+            self.model.generation_config.top_k = 1
+            self.model.generation_config.top_p = 0.0
+            self.model.generation_config.use_cache = False
 
         # Load custom prompts and extractors
         if task not in PROMPTS_EXTRACTS:
@@ -344,8 +349,8 @@ class VLLMEvaluator:
                 if 'gpt_judge' in metric_list:
                     match_score.update(gpt_judge_metric(item["question"], predicted_answer, ground_truth_answers, model='gpt-4o-mini'))
 
-                if 'llama_judge' in metric_list:
-                    match_score.update(llama_judge_metric(item["question"], predicted_answer, ground_truth_answers))
+                # if 'llama_judge' in metric_list:
+                #     match_score.update(llama_judge_metric(item["question"], predicted_answer, ground_truth_answers))
                 
                 is_correct = False
                 if any([s > 0 for s in match_score.values()]):

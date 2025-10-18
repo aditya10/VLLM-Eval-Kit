@@ -65,32 +65,49 @@ def parse_bounding_boxes(output: str):
     return bboxes
 
 sg_prompt_suffix = (
-            " Please generate a scene graph and Answer the Question based on the scene graph. "
-            "List the main objects, their bounding boxes and how they relate to each other. "
-            "Generate a scene graph for this image in JSON format with the following structure:\n"
-            "{\n"
-            '    "objects": [\n'
-            "        {\n"
-            '            "id": "obj1",\n'
-            '            "name": "object_name",\n'
-            '            "bbox": "bounding box coordinates"\n'
-            "        }\n"
-            "    ],\n"
-            '    "relationships": [\n'
-            "        {\n"
-            '            "subject": "obj1",\n'
-            '            "predicate": "relationship_type",\n'
-            '            "object": "obj2"\n'
-            "        }\n"
-            "    ]\n"
-            "}\n"
-            "\n"
-            "Then, based on the scene graph, answer the question in single word or phrase.\n"
-            "OUTPUT FORMAT:\n"
-            f"Question: {{question}}\n"
-            "JSON Scene Graph:\n"
-            "<answer>:"
-        )   
+    """Please generate a scene graph and Answer the Question based on the scene graph. 
+    List the main objects, their bounding boxes and how they relate to each other. 
+    "Generate a scene graph for this image in JSON format with the following structure:
+    {
+        "objects": [
+            {
+                "id": "obj1",
+                "name": "object_name",
+                "bbox": "bounding box coordinates"
+            }
+        ],
+        "relationships": [
+            {
+                "subject": "obj1",
+                "predicate": "relationship_type",
+                "object": "obj2"
+            }
+        ],
+    }
+    
+    Then, based on the scene graph, answer the question.\n
+    OUTPUT FORMAT:
+    Question: {Which animal is bigger?}
+    JSON Scene Graph:
+    Answer:
+    """
+)
+
+def sg_ans_extractor(raw_output):
+    
+    """Extract the final answer from GRIT's structured output"""
+    # Look for answer after <answer> tag
+    answer_match = re.search(r'Answer\s*(.*?)(?:\s*$)', raw_output, re.DOTALL | re.IGNORECASE)
+
+    if answer_match:
+        return answer_match.group(1).strip()
+    else:
+        answer_match = re.search(r'Answer\s*(.*?)(?:\s*$)', raw_output, re.DOTALL | re.IGNORECASE)
+        if answer_match:
+            return answer_match.group(1).strip()
+    
+    # If no structured output found, return the full output
+    return raw_output.strip() 
 
 
 PROMPTS_EXTRACTS = {
@@ -106,7 +123,7 @@ PROMPTS_EXTRACTS = {
     }, 
     "sg": {
         "prompt_suffix": sg_prompt_suffix, 
-        "extract_func": vanilla_ans_extractor,  # Reuse vanilla extractor for scene graph answers
+        "extract_func": sg_ans_extractor,  # Reuse vanilla extractor for scene graph answers
         "custom_func": parse_bounding_boxes
     }
 }
