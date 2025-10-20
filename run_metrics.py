@@ -38,7 +38,7 @@ def run_metric(json_file, metric, agg='mean'):
         overall_score = sum(scores) / len(scores) if scores else 0.0
     if agg == 'mean_non_zero':
         non_zero_scores = [s for s in scores if s > 0]
-        overall_score = sum(non_zero_scores) / len(non_zero_scores) if non_zero_scores else 0.0
+        overall_score = len(non_zero_scores) / len(scores)
     
     if "agg_results" in results:
         results['agg_results'][metric] = overall_score

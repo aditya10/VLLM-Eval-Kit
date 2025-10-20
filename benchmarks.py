@@ -45,7 +45,7 @@ class BenchmarkConfig:
             'image_key': 'image',
             'answer_key': 'answers',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
-            'metric': 'exact_match+gpt_judge',
+            'metric': 'exact_match',
             'description': 'TextVQA dataset'
         },
         'infovqa': {

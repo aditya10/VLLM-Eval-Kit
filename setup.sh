@@ -2,6 +2,7 @@
 module load python/3.11
 module load gcc arrow/21.0.0 cuda 
 module load scipy-stack opencv
+source vlevalenv/bin/activate
 
 python -m venv vlevalenv
 source vlevalenv/bin/activate

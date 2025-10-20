@@ -400,7 +400,8 @@ class VLLMEvaluator:
         }
         
         # Save results
-        output_file = os.path.join(output_dir, f"eval_{limit}_{benchmark}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        mname=self.model_id.split('/')[-1]
+        output_file = os.path.join(output_dir, f"{mname}_{self.task}_{benchmark}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
         with open(output_file, 'w') as f:
             json.dump(evaluation_results, f, indent=2)
         

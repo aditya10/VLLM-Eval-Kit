@@ -87,7 +87,7 @@ sg_prompt_suffix = (
     
     Then, based on the scene graph, answer the question.\n
     OUTPUT FORMAT:
-    Question: {Which animal is bigger?}
+    Question: {question}
     JSON Scene Graph:
     Answer:
     """
@@ -133,8 +133,12 @@ def create_prompt(task: str, question: str, post_prompt: str = "") -> str:
     if task not in PROMPTS_EXTRACTS:
         raise ValueError(f"Unsupported task: {task}")
     prompt_suffix = PROMPTS_EXTRACTS[task]["prompt_suffix"]
-    
-    return f"Question: {question}{prompt_suffix}{post_prompt}\n"
+    if task == "vanilla":
+        return f"Question: {question}{prompt_suffix}{post_prompt}\n"
+    elif task == "grit":
+        return f"Question: {question}{prompt_suffix}{post_prompt}\n"
+    elif task == "sg": # POST PROMPT IGNORED FOR SG
+        return "Question: "+prompt_suffix.format(question=question)
 
 
 
