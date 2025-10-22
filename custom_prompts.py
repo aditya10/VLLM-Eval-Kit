@@ -64,8 +64,7 @@ def parse_bounding_boxes(output: str):
             pass
     return bboxes
 
-sg_prompt_suffix = (
-    """Please generate a scene graph and Answer the Question based on the scene graph. 
+sg_prompt_suffix = """Please generate a scene graph and Answer the Question based on the scene graph. 
     List the main objects, their bounding boxes and how they relate to each other. 
     "Generate a scene graph for this image in JSON format with the following structure:
     {
@@ -87,11 +86,11 @@ sg_prompt_suffix = (
     
     Then, based on the scene graph, answer the question.\n
     OUTPUT FORMAT:
-    Question: {question}
+    Question: <question>
     JSON Scene Graph:
     Answer:
     """
-)
+
 
 def sg_ans_extractor(raw_output):
     
@@ -138,7 +137,7 @@ def create_prompt(task: str, question: str, post_prompt: str = "") -> str:
     elif task == "grit":
         return f"Question: {question}{prompt_suffix}{post_prompt}\n"
     elif task == "sg": # POST PROMPT IGNORED FOR SG
-        return "Question: "+prompt_suffix.format(question=question)
+        return "Question: "+prompt_suffix.replace("<question>", question)
 
 
 

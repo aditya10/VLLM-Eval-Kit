@@ -3,6 +3,8 @@ import string
 import numpy as np
 from openai import OpenAI
 from keys import OPENAI_API_KEY
+import json
+import datetime
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -161,7 +163,64 @@ def gpt_judge_metric(question, prediction, references, model='gpt-4o-mini'):
     except Exception as e:
         print(f"Error in GPT judge evaluation: {e}")
         return {"gpt_judge_score": 0.0}
-    
+
+def gpt_judge_batch(detailed_results):
+
+    batch_data = []
+    for entry in detailed_results:
+
+        question = entry['question']
+        prediction = entry['predicted_answer']
+        references = entry['ground_truth_answers']
+
+        prompt = f"""You are responsible for proofreading the answers, you need to give a score to the model's answer by referring to the standard answer set, based on the given question. The full score is 1 point and the minimum score is 0 points. Please output the score in the json form "{{"score": <score>}}". The evaluation criteria require that the closer the model's answer is to any of the standard answers, the higher the score.
+            Question: {question} 
+            Standard answer: {references} 
+            Model's answer: {prediction}"""
+
+        messages = [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+
+        data = {
+            "custom_id": str(entry['sample_id']),
+            "method": "POST", 
+            "url": "/v1/chat/completions", 
+            "body": {
+                "model": "gpt-4o-mini", 
+                "messages": messages,
+                "max_tokens": 100
+                }
+            }
+        
+        batch_data.append(data)
+    # Save batch data to a JSONL file
+    datetimestr = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    fname = f"batchinput_{datetimestr}.jsonl"
+    with open(fname, "w") as f:
+        for item in batch_data:
+            f.write(json.dumps(item) + "\n")
+
+    batch_input_file = client.files.create(
+        file=open(fname, "rb"),
+        purpose="batch"
+    )
+
+    print(batch_input_file)
+
+    batch_input_file_id = batch_input_file.id
+    client.batches.create(
+        input_file_id=batch_input_file_id,
+        endpoint="/v1/chat/completions",
+        completion_window="24h",
+        metadata={
+            "description": "GPT_Judge Metric Batch Job",
+        }
+    )
+
 
 def levenshtein_distance(s1, s2):
     if len(s1) > len(s2):

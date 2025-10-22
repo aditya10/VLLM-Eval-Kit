@@ -78,11 +78,10 @@ class VLLMEvaluator:
             self.model.generation_config.top_k = 1
             self.model.generation_config.top_p = 0.0
         if task == "sg":
-            self.model.generation_config.max_new_tokens = 2048
+            self.model.generation_config.max_new_tokens = 400
             self.model.generation_config.temperature = 0.001
             self.model.generation_config.top_k = 1
             self.model.generation_config.top_p = 0.0
-            self.model.generation_config.use_cache = False
 
         # Load custom prompts and extractors
         if task not in PROMPTS_EXTRACTS:
@@ -173,7 +172,7 @@ class VLLMEvaluator:
             # Process results - need to align with original batch_data indices
             batch_results = []
             prediction_idx = 0
-            
+
             for i in range(len(batch_data)):
                 if i in valid_indices:
                     # This item was processed successfully
