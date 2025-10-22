@@ -79,6 +79,17 @@ class BenchmarkConfig:
             'metric': 'exact_match',
             'description': 'OK-VQA val2014 dataset'
         },
+        'vsr': {
+            'dataset_name': './datasets/vsr_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '~/scratch/vsr_images/images',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'VSR Val dataset'
+        },
     }
     
     @classmethod

@@ -10,9 +10,8 @@ import torch
 import json
 import os
 from typing import List, Dict, Any, Optional, Union
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
-from transformers.modeling_utils import VLMS
 from tqdm import tqdm
 import argparse
 from datetime import datetime
@@ -24,6 +23,7 @@ from benchmarks import BenchmarkConfig
 from custom_prompts import PROMPTS_EXTRACTS, create_prompt
 from vision_process import process_vision_info
 from metrics import exact_match_hf_evaluate, gpt_judge_metric
+from custom_datasets import load_vsr_dataset
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -213,6 +213,70 @@ class VLLMEvaluator:
             # Return error for all items in batch
             return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": str(e)} for _ in batch_data]
 
+    def load_benchmark_dataset(self, benchmark_name: str, config: str, limit: Optional[int] = None, random_seed: int = 42) -> List[Dict]:
+        """Load dataset for a specific benchmark"""
+        
+        if benchmark_name.lower() == 'vsr':
+            return load_vsr_dataset(config)
+
+        if config.get('requires_merge', False):
+            # Special handling for GQA - merge instructions and images
+            instructions_dataset = load_dataset(
+                config['dataset_name'], 
+                config['dataset_config'], 
+                split=config['split']
+            )
+            images_dataset = load_dataset(
+                config['dataset_name'], 
+                config['images_config'], 
+                split=config['split']
+            )
+            
+            # Create a mapping from image id to image
+            image_map = {item['id']: item['image'] for item in images_dataset}
+            
+            # Merge datasets by adding images to instructions
+            merged_data = []
+            for item in instructions_dataset:
+                image_id = item[config['image_id_key']]
+                if image_id in image_map:
+                    merged_item = dict(item)
+                    merged_item[config['image_key']] = image_map[image_id]
+                    merged_data.append(merged_item)
+            
+            # Convert back to dataset format
+            dataset = Dataset.from_list(merged_data)
+            
+        elif 'dataset_config' in config and config['dataset_config']:
+            # Load with specific configuration
+            if config['split']:
+                dataset = load_dataset(config['dataset_name'], config['dataset_config'], split=config['split'])
+            else:
+                # For datasets where split is included in config name
+                dataset = load_dataset(config['dataset_name'], config['dataset_config'])
+        else:
+            # Load without configuration (original behavior)
+            dataset = load_dataset(config['dataset_name'], split=config['split'])
+        
+        
+        if limit:
+            # Set random seed for consistent sampling
+            np.random.seed(random_seed)
+            random.seed(random_seed)
+            
+            total_samples = len(dataset)
+            if limit >= total_samples:
+                logger.info(f"Limit ({limit}) >= dataset size ({total_samples}), using all samples")
+            else:
+                # Generate random indices without replacement
+                random_indices = np.random.choice(total_samples, size=limit, replace=False)
+                random_indices = sorted(random_indices.tolist())
+                dataset = dataset.select(random_indices)
+                logger.info(f"Randomly sampled {limit} samples from {total_samples} total samples (seed: {random_seed})")
+        
+        logger.info(f"Dataset loaded: {len(dataset)} samples")
+        return dataset
+
     def evaluate_benchmark(self, 
                           benchmark: str,
                           limit: int = None,
@@ -231,65 +295,7 @@ class VLLMEvaluator:
             logger.info(f"Dataset: {config['dataset_name']}, Split: {config['split']}")
         
         # Load dataset
-        try:
-            if config.get('requires_merge', False):
-                # Special handling for GQA - merge instructions and images
-                instructions_dataset = load_dataset(
-                    config['dataset_name'], 
-                    config['dataset_config'], 
-                    split=config['split']
-                )
-                images_dataset = load_dataset(
-                    config['dataset_name'], 
-                    config['images_config'], 
-                    split=config['split']
-                )
-                
-                # Create a mapping from image id to image
-                image_map = {item['id']: item['image'] for item in images_dataset}
-                
-                # Merge datasets by adding images to instructions
-                merged_data = []
-                for item in instructions_dataset:
-                    image_id = item[config['image_id_key']]
-                    if image_id in image_map:
-                        merged_item = dict(item)
-                        merged_item[config['image_key']] = image_map[image_id]
-                        merged_data.append(merged_item)
-                
-                # Convert back to dataset format
-                from datasets import Dataset
-                dataset = Dataset.from_list(merged_data)
-                
-            elif 'dataset_config' in config and config['dataset_config']:
-                # Load with specific configuration
-                if config['split']:
-                    dataset = load_dataset(config['dataset_name'], config['dataset_config'], split=config['split'])
-                else:
-                    # For datasets where split is included in config name
-                    dataset = load_dataset(config['dataset_name'], config['dataset_config'])
-            else:
-                # Load without configuration (original behavior)
-                dataset = load_dataset(config['dataset_name'], split=config['split'])
-            if limit:
-                # Set random seed for consistent sampling
-                np.random.seed(random_seed)
-                random.seed(random_seed)
-                
-                total_samples = len(dataset)
-                if limit >= total_samples:
-                    logger.info(f"Limit ({limit}) >= dataset size ({total_samples}), using all samples")
-                else:
-                    # Generate random indices without replacement
-                    random_indices = np.random.choice(total_samples, size=limit, replace=False)
-                    random_indices = sorted(random_indices.tolist())
-                    dataset = dataset.select(random_indices)
-                    logger.info(f"Randomly sampled {limit} samples from {total_samples} total samples (seed: {random_seed})")
-            
-            logger.info(f"Dataset loaded: {len(dataset)} samples")
-        except Exception as e:
-            logger.error(f"Error loading dataset: {e}")
-            return {"error": str(e)}
+        dataset = self.load_benchmark_dataset(benchmark, config, limit, random_seed)
         
         # Create output directory
         os.makedirs(output_dir, exist_ok=True)
@@ -383,6 +389,7 @@ class VLLMEvaluator:
         evaluation_results = {
             "dataset": config['dataset_name'],
             "dataset_config": config.get('dataset_config', None),
+            
             "split": config['split'],
             "total_samples": len(dataset),
             "successful_predictions": total_predictions,
