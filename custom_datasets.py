@@ -3,7 +3,7 @@ import os
 from PIL import Image
 from datasets import Dataset
 
-def load_vsr_dataset(config):
+def load_grit_jsonl_dataset(config):
     """Load VSR dataset from local JSONL file"""
     dataset_path = config['dataset_name']
     img_folder = os.path.expanduser(config['img_folder'])
@@ -27,7 +27,7 @@ def load_vsr_dataset(config):
                 processed_item = {
                     config['question_key']: item[config['question_key']],
                     config['image_key']: image,
-                    config['answer_key']: item[config['answer_key']]
+                    config['answer_key']: str(item[config['answer_key']])
                 }
                 processed_data.append(processed_item)
             except Exception as e:

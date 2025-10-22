@@ -90,6 +90,17 @@ class BenchmarkConfig:
             'metric': 'exact_match',
             'description': 'VSR Val dataset'
         },
+        'tallyqa': {
+            'dataset_name': './datasets/tallyqa_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/datasets/VisualGenome',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'TallyQA Val dataset'
+        },
     }
     
     @classmethod

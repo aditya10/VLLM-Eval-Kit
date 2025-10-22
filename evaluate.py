@@ -23,7 +23,7 @@ from benchmarks import BenchmarkConfig
 from custom_prompts import PROMPTS_EXTRACTS, create_prompt
 from vision_process import process_vision_info
 from metrics import exact_match_hf_evaluate, gpt_judge_metric
-from custom_datasets import load_vsr_dataset
+from custom_datasets import load_grit_jsonl_dataset
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -213,11 +213,11 @@ class VLLMEvaluator:
             # Return error for all items in batch
             return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": str(e)} for _ in batch_data]
 
-    def load_benchmark_dataset(self, benchmark_name: str, config: str, limit: Optional[int] = None, random_seed: int = 42) -> List[Dict]:
+    def load_benchmark_dataset(self, config: str, limit: Optional[int] = None, random_seed: int = 42) -> List[Dict]:
         """Load dataset for a specific benchmark"""
         
-        if benchmark_name.lower() == 'vsr':
-            return load_vsr_dataset(config)
+        if config['dataset_name'].endswith('.jsonl'):
+            return load_grit_jsonl_dataset(config)
 
         if config.get('requires_merge', False):
             # Special handling for GQA - merge instructions and images
@@ -295,7 +295,7 @@ class VLLMEvaluator:
             logger.info(f"Dataset: {config['dataset_name']}, Split: {config['split']}")
         
         # Load dataset
-        dataset = self.load_benchmark_dataset(benchmark, config, limit, random_seed)
+        dataset = self.load_benchmark_dataset(config, limit, random_seed)
         
         # Create output directory
         os.makedirs(output_dir, exist_ok=True)
@@ -389,7 +389,6 @@ class VLLMEvaluator:
         evaluation_results = {
             "dataset": config['dataset_name'],
             "dataset_config": config.get('dataset_config', None),
-            
             "split": config['split'],
             "total_samples": len(dataset),
             "successful_predictions": total_predictions,
