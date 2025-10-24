@@ -154,9 +154,13 @@ def create_prompt(task: str, question: str, post_prompt: str = "") -> str:
     elif task == "grit":
         return f"Question: {question}{prompt_suffix}{post_prompt}\n"
     elif task == "sg": # POST PROMPT IGNORED FOR SG
+<<<<<<< HEAD
         #return "Question: "+prompt_suffix.format(question=question)
         #import pdb; pdb.set_trace()
         return f"Question: {question}" + prompt_suffix
+=======
+        return "Question: "+prompt_suffix.replace("<question>", question)
+>>>>>>> origin/main
 
 
 

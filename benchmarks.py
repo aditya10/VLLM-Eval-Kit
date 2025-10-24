@@ -79,6 +79,72 @@ class BenchmarkConfig:
             'metric': 'exact_match',
             'description': 'OK-VQA val2014 dataset'
         },
+        'grit_vsr': {
+            'dataset_name': './datasets/vsr_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/home/aditya10/scratch/vsr_images/images',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'VSR Val dataset'
+        },
+        'grit_tallyqa': {
+            'dataset_name': './datasets/tallyqa_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/datasets/VisualGenome',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'TallyQA Val dataset'
+        },
+        'grit_mme': {
+            'dataset_name': './datasets/mme_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/home/aditya10/scratch/mme_images/mme',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'MME Val dataset from GRIT'
+        },
+        'grit_mathvista': {
+            'dataset_name': './datasets/mathvista_mini_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/home/aditya10/scratch/mathvista_mini_images/mathvista_mini',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'Mathvista Val dataset from GRIT'
+        },
+        'grit_gqa': {
+            'dataset_name': './datasets/gqa_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '', #TODO: Add GQA images path
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'GQA Val dataset from GRIT'
+        },
+        'grit_ovd_position': {
+            'dataset_name': './datasets/ovd_position_val.jsonl',
+            'split': 'val',
+            'question_key': 'question',
+            'image_key': 'image',
+            'answer_key': 'answer',
+            'img_folder': '/home/aditya10/scratch/ovd_position_images',
+            'post_prompt': '\nAnswer the question using a single word or phrase.',
+            'metric': 'exact_match',
+            'description': 'GQA Val dataset from GRIT'
+        },
     }
     
     @classmethod

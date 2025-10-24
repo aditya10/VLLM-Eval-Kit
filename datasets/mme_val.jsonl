@@ -1,0 +1,240 @@
+{"question": "Is there only one bottle in the image? Please answer yes or no.", "answer": "Yes", "image": "000860.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there two bottles in the image? Please answer yes or no.", "answer": "No", "image": "000861.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there three remotes in this image? Please answer yes or no.", "answer": "Yes", "image": "000862.png", "width": 640, "height": 473, "dataset": "mme_count"}
+{"question": "Are there only two remotes in this image? Please answer yes or no.", "answer": "No", "image": "000863.png", "width": 640, "height": 473, "dataset": "mme_count"}
+{"question": "Are there three people appear in this image? Please answer yes or no.", "answer": "Yes", "image": "000864.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there only two people appear in this image? Please answer yes or no.", "answer": "No", "image": "000865.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there only one dog in the image? Please answer yes or no.", "answer": "Yes", "image": "000866.png", "width": 640, "height": 485, "dataset": "mme_count"}
+{"question": "Is there two dogs in the image? Please answer yes or no.", "answer": "No", "image": "000867.png", "width": 640, "height": 485, "dataset": "mme_count"}
+{"question": "Is there only one necktie in the image? Please answer yes or no.", "answer": "Yes", "image": "000868.png", "width": 480, "height": 640, "dataset": "mme_count"}
+{"question": "Is there three neckties in the image? Please answer yes or no.", "answer": "No", "image": "000869.png", "width": 480, "height": 640, "dataset": "mme_count"}
+{"question": "Are there two horses in this image? Please answer yes or no.", "answer": "Yes", "image": "000870.png", "width": 640, "height": 409, "dataset": "mme_count"}
+{"question": "Is there only one horse in this image? Please answer yes or no.", "answer": "No", "image": "000871.png", "width": 640, "height": 409, "dataset": "mme_count"}
+{"question": "Are there three zippers in the picture? Please answer yes or no.", "answer": "Yes", "image": "000872.png", "width": 427, "height": 640, "dataset": "mme_count"}
+{"question": "Is there a zipper in the picture? Please answer yes or no.", "answer": "No", "image": "000873.png", "width": 427, "height": 640, "dataset": "mme_count"}
+{"question": "Are there four dogs appear in this image? Please answer yes or no.", "answer": "Yes", "image": "000874.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Are there only three dogs appear in this image? Please answer yes or no.", "answer": "No", "image": "000875.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Are there three laptops in the picture? Please answer yes or no.", "answer": "Yes", "image": "000876.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Are there four laptops in the picture? Please answer yes or no.", "answer": "No", "image": "000877.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Is there only one ship in the picture? Please answer yes or no.", "answer": "Yes", "image": "000878.png", "width": 500, "height": 334, "dataset": "mme_count"}
+{"question": "Is there a total of two ships in the picture? Please answer yes or no.", "answer": "No", "image": "000879.png", "width": 500, "height": 334, "dataset": "mme_count"}
+{"question": "Is there no person in this picture? Please answer yes or no.", "answer": "Yes", "image": "000880.png", "width": 448, "height": 640, "dataset": "mme_count"}
+{"question": "Are there two people appear in this image? Please answer yes or no.", "answer": "No", "image": "000881.png", "width": 448, "height": 640, "dataset": "mme_count"}
+{"question": "Are there two bath towels in the picture? Please answer yes or no.", "answer": "Yes", "image": "000882.png", "width": 333, "height": 500, "dataset": "mme_count"}
+{"question": "Is there only one bath towel in the picture? Please answer yes or no.", "answer": "No", "image": "000883.png", "width": 333, "height": 500, "dataset": "mme_count"}
+{"question": "Are there two bowls in this image? Please answer yes or no.", "answer": "Yes", "image": "000884.png", "width": 612, "height": 612, "dataset": "mme_count"}
+{"question": "Are there three bowls in this image? Please answer yes or no.", "answer": "No", "image": "000885.png", "width": 612, "height": 612, "dataset": "mme_count"}
+{"question": "Is there a total of three cakes in this image? Please answer yes or no.", "answer": "Yes", "image": "000886.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Are there only two cakes in this image? Please answer yes or no.", "answer": "No", "image": "000887.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Is there a dog in the picture? Please answer yes or no.", "answer": "Yes", "image": "000888.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there a total of two dogs in the picture? Please answer yes or no.", "answer": "No", "image": "000889.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there two tennis rackets in the picture? Please answer yes or no.", "answer": "Yes", "image": "000890.png", "width": 464, "height": 640, "dataset": "mme_count"}
+{"question": "Are there only one tennis racket in the picture? Please answer yes or no.", "answer": "No", "image": "000891.png", "width": 464, "height": 640, "dataset": "mme_count"}
+{"question": "Are there four people in this image? Please answer yes or no.", "answer": "Yes", "image": "000892.png", "width": 500, "height": 455, "dataset": "mme_count"}
+{"question": "Are there five people in this image? Please answer yes or no.", "answer": "No", "image": "000893.png", "width": 500, "height": 455, "dataset": "mme_count"}
+{"question": "Is there a total of two display devices in the image? Please answer yes or no.", "answer": "Yes", "image": "000894.png", "width": 640, "height": 428, "dataset": "mme_count"}
+{"question": "Is there only one display device in the image?  Please answer yes or no.", "answer": "No", "image": "000895.png", "width": 640, "height": 428, "dataset": "mme_count"}
+{"question": "Are there two bananas in the image? Please answer yes or no.", "answer": "Yes", "image": "000896.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there three bananas in the image? Please answer yes or no.", "answer": "No", "image": "000897.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there a total of two people in the image? Please answer yes or no.", "answer": "Yes", "image": "000898.png", "width": 640, "height": 425, "dataset": "mme_count"}
+{"question": "Is there only one people in the image? Please answer yes or no.", "answer": "No", "image": "000899.png", "width": 640, "height": 425, "dataset": "mme_count"}
+{"question": "Is there a train in the picture? Please answer yes or no.", "answer": "Yes", "image": "000900.png", "width": 640, "height": 351, "dataset": "mme_count"}
+{"question": "Are there a total of two trains in the picture? Please answer yes or no.", "answer": "No", "image": "000901.png", "width": 640, "height": 351, "dataset": "mme_count"}
+{"question": "Are there two giraffes in this image? Please answer yes or no.", "answer": "Yes", "image": "000902.png", "width": 640, "height": 476, "dataset": "mme_count"}
+{"question": "Are there three giraffes in this picture? Please answer yes or no.", "answer": "No", "image": "000903.png", "width": 640, "height": 476, "dataset": "mme_count"}
+{"question": "Is there a total of two dogs in the image? Please answer yes or no.", "answer": "Yes", "image": "000904.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Is there only one dogs in the image? Please answer yes or no.", "answer": "No", "image": "000905.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Are there two pieces of pizza in this image? Please answer yes or no.", "answer": "Yes", "image": "000906.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Is there only one piece of pizza in this image? Please answer yes or no.", "answer": "No", "image": "000907.png", "width": 640, "height": 426, "dataset": "mme_count"}
+{"question": "Are there four people appear in this image? Please answer yes or no.", "answer": "Yes", "image": "000908.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Are there only three people appear in this image? Please answer yes or no.", "answer": "No", "image": "000909.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Are there six people appear in this image? Please answer yes or no.", "answer": "Yes", "image": "000910.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Are there seven people appear in this image? Please answer yes or no.", "answer": "No", "image": "000911.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there a total of two person appear in the image? Please answer yes or no.", "answer": "Yes", "image": "000912.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there only one person appear in the image? Please answer yes or no.", "answer": "No", "image": "000913.png", "width": 640, "height": 480, "dataset": "mme_count"}
+{"question": "Is there only one bowl in this image? Please answer yes or no.", "answer": "Yes", "image": "000914.png", "width": 612, "height": 612, "dataset": "mme_count"}
+{"question": "Are there two bowls in this image? Please answer yes or no.", "answer": "No", "image": "000915.png", "width": 612, "height": 612, "dataset": "mme_count"}
+{"question": "Are there two toilets in the picture? Please answer yes or no.", "answer": "Yes", "image": "000916.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Is there only one toilet in the picture? Please answer yes or no.", "answer": "No", "image": "000917.png", "width": 640, "height": 427, "dataset": "mme_count"}
+{"question": "Are there four people in the image? Please answer yes or no.", "answer": "Yes", "image": "000918.png", "width": 640, "height": 515, "dataset": "mme_count"}
+{"question": "Are there only three people in the image? Please answer yes or no.", "answer": "No", "image": "000919.png", "width": 640, "height": 515, "dataset": "mme_count"}
+{"question": "Is there a blue and yellow fire hydrant in the image? Please answer yes or no.", "answer": "Yes", "image": "000920.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a blue and orange fire hydrant in the image? Please answer yes or no.", "answer": "No", "image": "000921.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a white plate in the image? Please answer yes or no.", "answer": "Yes", "image": "000922.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a yellow plate in the image? Please answer yes or no.", "answer": "No", "image": "000923.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Are there any green beans in the image? Please answer yes or no.", "answer": "Yes", "image": "000924.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Are there any orange beans in the image? Please answer yes or no.", "answer": "No", "image": "000925.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Is there a red coat in the image? Please answer yes or no.", "answer": "Yes", "image": "000926.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a yellow coat in the image? Please answer yes or no.", "answer": "No", "image": "000927.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a brown and white animal in the image? Please answer yes or no.", "answer": "Yes", "image": "000928.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a green and red animal in the image? Please answer yes or no.", "answer": "No", "image": "000929.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a green hat in the image? Please answer yes or no.", "answer": "Yes", "image": "000930.png", "width": 500, "height": 333, "dataset": "mme_color"}
+{"question": "Is there a red hat in the image? Please answer yes or no.", "answer": "No", "image": "000931.png", "width": 500, "height": 333, "dataset": "mme_color"}
+{"question": "Is there a skateboard with red wheels in the image? Please answer yes or no.", "answer": "Yes", "image": "000932.png", "width": 427, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a skateboard with black wheels in the image? Please answer yes or no.", "answer": "No", "image": "000933.png", "width": 427, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a white plate in the image? Please answer yes or no.", "answer": "Yes", "image": "000934.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Is there a yellow plate in the image? Please answer yes or no.", "answer": "No", "image": "000935.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Is there a man wearing a red shirt in the image? Please answer yes or no.", "answer": "Yes", "image": "000936.png", "width": 640, "height": 356, "dataset": "mme_color"}
+{"question": "Is there a man wearing a white shirt in the image? Please answer yes or no.", "answer": "No", "image": "000937.png", "width": 640, "height": 356, "dataset": "mme_color"}
+{"question": "Is there a red couch in the image? Please answer yes or no.", "answer": "Yes", "image": "000938.png", "width": 640, "height": 425, "dataset": "mme_color"}
+{"question": "Is there a black couch in the image? Please answer yes or no.", "answer": "No", "image": "000939.png", "width": 640, "height": 425, "dataset": "mme_color"}
+{"question": "Is there a living room painted yellow in the image? Please answer yes or no.", "answer": "Yes", "image": "000940.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a living room painted black in the image? Please answer yes or no.", "answer": "No", "image": "000941.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a red boat in the image? Please answer yes or no.", "answer": "Yes", "image": "000942.png", "width": 500, "height": 334, "dataset": "mme_color"}
+{"question": "Is there a gray boat in the image? Please answer yes or no.", "answer": "No", "image": "000943.png", "width": 500, "height": 334, "dataset": "mme_color"}
+{"question": "Is there a brown and black dog in the image? Please answer yes or no.", "answer": "Yes", "image": "000944.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a brown and white dog in the image? Please answer yes or no.", "answer": "No", "image": "000945.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a red scarf in the image?  Please answer yes or no.", "answer": "Yes", "image": "000946.png", "width": 429, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a brown scarf in the image?  Please answer yes or no.", "answer": "No", "image": "000947.png", "width": 429, "height": 640, "dataset": "mme_color"}
+{"question": "Are there any red shoes in the image? Please answer yes or no.", "answer": "Yes", "image": "000948.png", "width": 640, "height": 426, "dataset": "mme_color"}
+{"question": "Are there any yellow shoes in the image? Please answer yes or no.", "answer": "No", "image": "000949.png", "width": 640, "height": 426, "dataset": "mme_color"}
+{"question": "Is there a purple bottle in the image? Please answer yes or no.", "answer": "Yes", "image": "000950.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Is there a white bottle in the image? Please answer yes or no.", "answer": "No", "image": "000951.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Is there a red bicycle with white handlebars in the image? Please answer yes or no.", "answer": "Yes", "image": "000952.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Is there a red bicycle with black handlebars in the image? Please answer yes or no.", "answer": "No", "image": "000953.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Is there a gray wall in the image? Please answer yes or no.", "answer": "Yes", "image": "000954.png", "width": 481, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a red wall in the image? Please answer yes or no.", "answer": "No", "image": "000955.png", "width": 481, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a blue bus in the image? Please answer yes or no.", "answer": "Yes", "image": "000956.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a orange bus in the image? Please answer yes or no.", "answer": "No", "image": "000957.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a black and white toilet in the image? Please answer yes or no.", "answer": "Yes", "image": "000958.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a red and white toilet in the image? Please answer yes or no.", "answer": "No", "image": "000959.png", "width": 480, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a red brick building in the image? Please answer yes or no.", "answer": "Yes", "image": "000960.png", "width": 640, "height": 361, "dataset": "mme_color"}
+{"question": "Is there a yellow brick building in the image? Please answer yes or no.", "answer": "No", "image": "000961.png", "width": 640, "height": 361, "dataset": "mme_color"}
+{"question": "Is there a white bird in the image? Please answer yes or no.", "answer": "Yes", "image": "000962.png", "width": 427, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a yellow bird in the image? Please answer yes or no.", "answer": "No", "image": "000963.png", "width": 427, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a brown giraffe in the image?  Please answer yes or no.", "answer": "Yes", "image": "000964.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a black giraffe in the image? Please answer yes or no.", "answer": "No", "image": "000965.png", "width": 640, "height": 427, "dataset": "mme_color"}
+{"question": "Is there a white bus in the image?  Please answer yes or no.", "answer": "Yes", "image": "000966.png", "width": 550, "height": 410, "dataset": "mme_color"}
+{"question": "Is there a red bus in the image?  Please answer yes or no.", "answer": "No", "image": "000967.png", "width": 550, "height": 410, "dataset": "mme_color"}
+{"question": "Is there a blue court in the image? Please answer yes or no.", "answer": "Yes", "image": "000968.png", "width": 640, "height": 428, "dataset": "mme_color"}
+{"question": "Is there a purple court in the image? Please answer yes or no.", "answer": "No", "image": "000969.png", "width": 640, "height": 428, "dataset": "mme_color"}
+{"question": "Are there yellow poles in the image? Please answer yes or no.", "answer": "Yes", "image": "000970.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Are there blue poles in the image? Please answer yes or no.", "answer": "No", "image": "000971.png", "width": 612, "height": 612, "dataset": "mme_color"}
+{"question": "Are there any red flowers in the image? Please answer yes or no.", "answer": "Yes", "image": "000972.png", "width": 482, "height": 640, "dataset": "mme_color"}
+{"question": "Are there any green flowers in the image? Please answer yes or no.", "answer": "No", "image": "000973.png", "width": 482, "height": 640, "dataset": "mme_color"}
+{"question": "Is there a black cat in the image? Please answer yes or no.", "answer": "Yes", "image": "000974.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a brown cat in the image? Please answer yes or no.", "answer": "No", "image": "000975.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is there a brown dog in the image? Please answer yes or no.", "answer": "Yes", "image": "000976.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Is there a black dog in the image? Please answer yes or no.", "answer": "No", "image": "000977.png", "width": 500, "height": 375, "dataset": "mme_color"}
+{"question": "Are there a white dish in the image? Please answer yes or no.", "answer": "Yes", "image": "000978.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Are there a green dish in the image? Please answer yes or no.", "answer": "No", "image": "000979.png", "width": 640, "height": 480, "dataset": "mme_color"}
+{"question": "Is the pineapple on the left of the pot in the image? Please answer yes or no.", "answer": "Yes", "image": "001120.png", "width": 640, "height": 425, "dataset": "mme_position"}
+{"question": "Is the pineapple on the right of the pot in the image? Please answer yes or no.", "answer": "No", "image": "001121.png", "width": 640, "height": 425, "dataset": "mme_position"}
+{"question": "Is the dog above the pool in the image? Please answer yes or no.", "answer": "Yes", "image": "001122.png", "width": 640, "height": 485, "dataset": "mme_position"}
+{"question": "Is the dog under the pool in the image? Please answer yes or no.", "answer": "No", "image": "001123.png", "width": 640, "height": 485, "dataset": "mme_position"}
+{"question": "Is the big red and black umbrella on the top of people? Please answer yes or no.", "answer": "Yes", "image": "001124.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the big red and black umbrella under people? Please answer yes or no.", "answer": "No", "image": "001125.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the person on the right of the train? Please answer yes or no.", "answer": "Yes", "image": "001126.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the person on the left of the train? Please answer yes or no.", "answer": "No", "image": "001127.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Are the pedestrians on the right of the bus? Please answer yes or no.", "answer": "Yes", "image": "001128.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Are the pedestrians on the left of the bus? Please answer yes or no.", "answer": "No", "image": "001129.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Is the white mouse on the right of the black keyboard? Please answer yes or no.", "answer": "Yes", "image": "001130.png", "width": 500, "height": 375, "dataset": "mme_position"}
+{"question": "Is the white mouse on the left of the black keyboard? Please answer yes or no.", "answer": "No", "image": "001131.png", "width": 500, "height": 375, "dataset": "mme_position"}
+{"question": "Is the refrigerator on the left side of the picture? Please answer yes or no.", "answer": "Yes", "image": "001132.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the refrigerator on the right side of the picture Please answer yes or no.", "answer": "No", "image": "001133.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the light above the computer in the image? Please answer yes or no.", "answer": "Yes", "image": "001134.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the light under the computer in the image? Please answer yes or no.", "answer": "No", "image": "001135.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the cricket bat above the batter's body? Please answer yes or no.", "answer": "Yes", "image": "001136.png", "width": 500, "height": 333, "dataset": "mme_position"}
+{"question": "Is the cricket bat under the batter's body Please answer yes or no.", "answer": "No", "image": "001137.png", "width": 500, "height": 333, "dataset": "mme_position"}
+{"question": "Is the baby on the right of the dog in the image? Please answer yes or no.", "answer": "Yes", "image": "001138.png", "width": 427, "height": 640, "dataset": "mme_position"}
+{"question": "Is the baby on the left of the dog in the image? Please answer yes or no.", "answer": "No", "image": "001139.png", "width": 427, "height": 640, "dataset": "mme_position"}
+{"question": "Is the TV on the left of the bookshelf? Please answer yes or no.", "answer": "Yes", "image": "001140.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the TV on the right of the bookshelf? Please answer yes or no.", "answer": "No", "image": "001141.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the blue umbrella under the black umbrella? Please answer yes or no.", "answer": "Yes", "image": "001142.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the blue umbrella above the black umbrella? Please answer yes or no.", "answer": "No", "image": "001143.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the person under the kite? Please answer yes or no.", "answer": "Yes", "image": "001144.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Is the person above the kite? Please answer yes or no.", "answer": "No", "image": "001145.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Is the vase on the left of the bottle? Please answer yes or no.", "answer": "Yes", "image": "001146.png", "width": 426, "height": 640, "dataset": "mme_position"}
+{"question": "Is the vase on the right of the bottle? Please answer yes or no.", "answer": "No", "image": "001147.png", "width": 426, "height": 640, "dataset": "mme_position"}
+{"question": "Is there a sofa in the middle of potted plants in the image? Please answer yes or no.", "answer": "Yes", "image": "001148.png", "width": 500, "height": 333, "dataset": "mme_position"}
+{"question": "Is there a sofa in the right side of potted plants in the image? Please answer yes or no.", "answer": "No", "image": "001149.png", "width": 500, "height": 333, "dataset": "mme_position"}
+{"question": "Is the cake on the left side of the camera? Please answer yes or no.", "answer": "Yes", "image": "001150.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the cake on the right side of the camera? Please answer yes or no.", "answer": "No", "image": "001151.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the clock above people? Please answer yes or no.", "answer": "Yes", "image": "001152.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the clock under people? Please answer yes or no.", "answer": "No", "image": "001153.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the gray elephant in front of the brown elephant? Please answer yes or no.", "answer": "Yes", "image": "001154.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the brown elephant in front of the gray elephant? Please answer yes or no.", "answer": "No", "image": "001155.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the phone above the pizza in the image? Please answer yes or no.", "answer": "Yes", "image": "001156.png", "width": 640, "height": 481, "dataset": "mme_position"}
+{"question": "Is the phone under the pizza in the image? Please answer yes or no.", "answer": "No", "image": "001157.png", "width": 640, "height": 481, "dataset": "mme_position"}
+{"question": "Is the TV on the left of the lamp? Please answer yes or no.", "answer": "Yes", "image": "001158.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the TV on the right of the lamp? Please answer yes or no.", "answer": "No", "image": "001159.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the spoon in the bowl? Please answer yes or no.", "answer": "Yes", "image": "001160.png", "width": 424, "height": 640, "dataset": "mme_position"}
+{"question": "Is the spoon out of the bowl? Please answer yes or no.", "answer": "No", "image": "001161.png", "width": 424, "height": 640, "dataset": "mme_position"}
+{"question": "Is the trash can under the cup in the image？ Please answer yes or no.", "answer": "Yes", "image": "001162.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Is the trash can above the cup in the image？ Please answer yes or no.", "answer": "No", "image": "001163.png", "width": 480, "height": 640, "dataset": "mme_position"}
+{"question": "Is the monitor on top of a person? Please answer yes or no.", "answer": "Yes", "image": "001164.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the monitor under the person? Please answer yes or no.", "answer": "No", "image": "001165.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the motorcycle on the right side of the bus? Please answer yes or no.", "answer": "Yes", "image": "001166.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the motorcycle on the left side of the bus Please answer yes or no.", "answer": "No", "image": "001167.png", "width": 640, "height": 480, "dataset": "mme_position"}
+{"question": "Is the sea behind people in the image? Please answer yes or no.", "answer": "Yes", "image": "001168.png", "width": 640, "height": 361, "dataset": "mme_position"}
+{"question": "Is the sea in front of people in the image? Please answer yes or no.", "answer": "No", "image": "001169.png", "width": 640, "height": 361, "dataset": "mme_position"}
+{"question": "Is the grey sofa on the right of the TV? Please answer yes or no.", "answer": "Yes", "image": "001170.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the grey sofa on the left of the TV? Please answer yes or no.", "answer": "No", "image": "001171.png", "width": 640, "height": 427, "dataset": "mme_position"}
+{"question": "Is the mirror above the TV? Please answer yes or no.", "answer": "Yes", "image": "001172.png", "width": 640, "height": 440, "dataset": "mme_position"}
+{"question": "Is the mirror under the TV? Please answer yes or no.", "answer": "No", "image": "001173.png", "width": 640, "height": 440, "dataset": "mme_position"}
+{"question": "Is the car on the right side of the fire hydrant in the picture? Please answer yes or no.", "answer": "Yes", "image": "001174.png", "width": 612, "height": 612, "dataset": "mme_position"}
+{"question": "Is the car on the left side of the fire hydrant in the picture? Please answer yes or no.", "answer": "No", "image": "001175.png", "width": 612, "height": 612, "dataset": "mme_position"}
+{"question": "Is the light above the fire hydrant in the image? Please answer yes or no.", "answer": "Yes", "image": "001176.png", "width": 580, "height": 640, "dataset": "mme_position"}
+{"question": "Is the light under the fire hydrant in the image?  Please answer yes or no.", "answer": "No", "image": "001177.png", "width": 580, "height": 640, "dataset": "mme_position"}
+{"question": "Is the vase on the left of the toothbrush? Please answer yes or no.", "answer": "Yes", "image": "001178.png", "width": 598, "height": 640, "dataset": "mme_position"}
+{"question": "Is the vase on the right of the toothbrush? Please answer yes or no.", "answer": "No", "image": "001179.png", "width": 598, "height": 640, "dataset": "mme_position"}
+{"question": "Is there a laptop in this image? Please answer yes or no.", "answer": "Yes", "image": "002020.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a potted plant in this image? Please answer yes or no.", "answer": "No", "image": "002021.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a bus in this image? Please answer yes or no.", "answer": "Yes", "image": "002022.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a cow in this image? Please answer yes or no.", "answer": "No", "image": "002023.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a bottle in this image? Please answer yes or no.", "answer": "Yes", "image": "002024.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a scissors in this image? Please answer yes or no.", "answer": "No", "image": "002025.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a umbrella in this image? Please answer yes or no.", "answer": "Yes", "image": "002026.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a horse in this image? Please answer yes or no.", "answer": "No", "image": "002027.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a chair in this image? Please answer yes or no.", "answer": "Yes", "image": "002028.png", "width": 640, "height": 458, "dataset": "mme_existence"}
+{"question": "Is there a airplane in this image? Please answer yes or no.", "answer": "No", "image": "002029.png", "width": 640, "height": 458, "dataset": "mme_existence"}
+{"question": "Is there a skateboard in this image? Please answer yes or no.", "answer": "Yes", "image": "002030.png", "width": 314, "height": 500, "dataset": "mme_existence"}
+{"question": "Is there a banana in this image? Please answer yes or no.", "answer": "No", "image": "002031.png", "width": 314, "height": 500, "dataset": "mme_existence"}
+{"question": "Is there a skateboard in this image? Please answer yes or no.", "answer": "Yes", "image": "002032.png", "width": 429, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a spoon in this image? Please answer yes or no.", "answer": "No", "image": "002033.png", "width": 429, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a bicycle in this image? Please answer yes or no.", "answer": "Yes", "image": "002034.png", "width": 480, "height": 320, "dataset": "mme_existence"}
+{"question": "Is there a apple in this image? Please answer yes or no.", "answer": "No", "image": "002035.png", "width": 480, "height": 320, "dataset": "mme_existence"}
+{"question": "Is there a car in this image? Please answer yes or no.", "answer": "Yes", "image": "002036.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a kite in this image? Please answer yes or no.", "answer": "No", "image": "002037.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a bottle in this image? Please answer yes or no.", "answer": "Yes", "image": "002038.png", "width": 640, "height": 361, "dataset": "mme_existence"}
+{"question": "Is there a apple in this image? Please answer yes or no.", "answer": "No", "image": "002039.png", "width": 640, "height": 361, "dataset": "mme_existence"}
+{"question": "Is there a elephant in this image? Please answer yes or no.", "answer": "Yes", "image": "002040.png", "width": 640, "height": 426, "dataset": "mme_existence"}
+{"question": "Is there a hair drier in this image? Please answer yes or no.", "answer": "No", "image": "002041.png", "width": 640, "height": 426, "dataset": "mme_existence"}
+{"question": "Is there a baseball bat in this image? Please answer yes or no.", "answer": "Yes", "image": "002042.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a giraffe in this image? Please answer yes or no.", "answer": "No", "image": "002043.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a sports ball in this image? Please answer yes or no.", "answer": "Yes", "image": "002044.png", "width": 464, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a horse in this image? Please answer yes or no.", "answer": "No", "image": "002045.png", "width": 464, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a person in this image? Please answer yes or no.", "answer": "Yes", "image": "002046.png", "width": 640, "height": 426, "dataset": "mme_existence"}
+{"question": "Is there a sink in this image? Please answer yes or no.", "answer": "No", "image": "002047.png", "width": 640, "height": 426, "dataset": "mme_existence"}
+{"question": "Is there a fire hydrant in this image? Please answer yes or no.", "answer": "Yes", "image": "002048.png", "width": 427, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a person in this image? Please answer yes or no.", "answer": "No", "image": "002049.png", "width": 427, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a cake in this image? Please answer yes or no.", "answer": "Yes", "image": "002050.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a tie in this image? Please answer yes or no.", "answer": "No", "image": "002051.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a train in this image? Please answer yes or no.", "answer": "Yes", "image": "002052.png", "width": 640, "height": 351, "dataset": "mme_existence"}
+{"question": "Is there a bed in this image? Please answer yes or no.", "answer": "No", "image": "002053.png", "width": 640, "height": 351, "dataset": "mme_existence"}
+{"question": "Is there a chair in this image? Please answer yes or no.", "answer": "Yes", "image": "002054.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a baseball bat in this image? Please answer yes or no.", "answer": "No", "image": "002055.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a car in this image? Please answer yes or no.", "answer": "Yes", "image": "002056.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a fork in this image? Please answer yes or no.", "answer": "No", "image": "002057.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a motorcycle in this image? Please answer yes or no.", "answer": "Yes", "image": "002058.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a bus in this image? Please answer yes or no.", "answer": "No", "image": "002059.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a backpack in this image? Please answer yes or no.", "answer": "Yes", "image": "002060.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a microwave in this image? Please answer yes or no.", "answer": "No", "image": "002061.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a bottle in this image? Please answer yes or no.", "answer": "Yes", "image": "002062.png", "width": 300, "height": 400, "dataset": "mme_existence"}
+{"question": "Is there a mouse in this image? Please answer yes or no.", "answer": "No", "image": "002063.png", "width": 300, "height": 400, "dataset": "mme_existence"}
+{"question": "Is there a motorcycle in this image? Please answer yes or no.", "answer": "Yes", "image": "002064.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a airplane in this image? Please answer yes or no.", "answer": "No", "image": "002065.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a toilet in this image? Please answer yes or no.", "answer": "Yes", "image": "002066.png", "width": 331, "height": 500, "dataset": "mme_existence"}
+{"question": "Is there a pizza in this image? Please answer yes or no.", "answer": "No", "image": "002067.png", "width": 331, "height": 500, "dataset": "mme_existence"}
+{"question": "Is there a truck in this image? Please answer yes or no.", "answer": "Yes", "image": "002068.png", "width": 640, "height": 299, "dataset": "mme_existence"}
+{"question": "Is there a book in this image? Please answer yes or no.", "answer": "No", "image": "002069.png", "width": 640, "height": 299, "dataset": "mme_existence"}
+{"question": "Is there a car in this image? Please answer yes or no.", "answer": "Yes", "image": "002070.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a cell phone in this image? Please answer yes or no.", "answer": "No", "image": "002071.png", "width": 500, "height": 333, "dataset": "mme_existence"}
+{"question": "Is there a spoon in this image? Please answer yes or no.", "answer": "Yes", "image": "002072.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a donut in this image? Please answer yes or no.", "answer": "No", "image": "002073.png", "width": 640, "height": 427, "dataset": "mme_existence"}
+{"question": "Is there a chair in this image? Please answer yes or no.", "answer": "Yes", "image": "002074.png", "width": 640, "height": 515, "dataset": "mme_existence"}
+{"question": "Is there a dog in this image? Please answer yes or no.", "answer": "No", "image": "002075.png", "width": 640, "height": 515, "dataset": "mme_existence"}
+{"question": "Is there a clock in this image? Please answer yes or no.", "answer": "Yes", "image": "002076.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a bottle in this image? Please answer yes or no.", "answer": "No", "image": "002077.png", "width": 480, "height": 640, "dataset": "mme_existence"}
+{"question": "Is there a refrigerator in this image? Please answer yes or no.", "answer": "Yes", "image": "002078.png", "width": 640, "height": 480, "dataset": "mme_existence"}
+{"question": "Is there a donut in this image? Please answer yes or no.", "answer": "No", "image": "002079.png", "width": 640, "height": 480, "dataset": "mme_existence"}

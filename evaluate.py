@@ -10,7 +10,7 @@ import torch
 import json
 import os
 from typing import List, Dict, Any, Optional, Union
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
 #from transformers.modeling_utils import VLMS
 from tqdm import tqdm
@@ -24,6 +24,7 @@ from benchmarks import BenchmarkConfig
 from custom_prompts import PROMPTS_EXTRACTS, create_prompt
 from vision_process import process_vision_info
 from metrics import exact_match_hf_evaluate, gpt_judge_metric
+from custom_datasets import load_grit_jsonl_dataset
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -135,63 +136,27 @@ class VLLMEvaluator:
                 messages, tokenize=False, add_generation_prompt=True
             )
             
-            texts.append(chat_text)
-            images.append(image)
-            valid_indices.append(i)
-        
-        if not texts:
-            # Return error results for all items if none are valid
-            return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": "Invalid image or question"} for _ in batch_data]
-        
-        # Process all images efficiently for batch
-        batch_messages = []
-        for i, (image, text) in enumerate(zip(images, texts)):
-            batch_messages.append({
-                "role": "user", 
-                "content": [{"type": "image", "image": image}, {"type": "text", "text": text}]
-            })
-        
-        # Process vision info for all images at once
-        all_img_inputs = []
-        for msg in batch_messages:
-            img_inputs, _ = process_vision_info([msg])
-            all_img_inputs.extend(img_inputs if img_inputs else [])
-        
-        # Batch processing
-        inputs = self.processor(
-            text=texts,
-            images=all_img_inputs if all_img_inputs else None,
-            padding=True,
-            return_tensors="pt",
-        ).to(self.model.device)
-        from time import time
-        start_time = time()
-        # Generate responses in batch
-        with torch.inference_mode():
-            gen_ids = self.model.generate(**inputs, generation_config=self.model.generation_config)
-        
-        # Decode all outputs
-        raw_outputs = self.processor.batch_decode(
-            gen_ids[:, inputs.input_ids.shape[1]:],
-            skip_special_tokens=True,
-            clean_up_tokenization_spaces=False,
-        )
-        print(raw_outputs)
-        end_time = time()
-        print(f"Time taken: {end_time - start_time} seconds")
-        #import pdb; pdb.set_trace()
-        
-        # Process results - need to align with original batch_data indices
-        batch_results = []
-        prediction_idx = 0
-        
-        for i in range(len(batch_data)):
-            if i in valid_indices:
-                # This item was processed successfully
-                raw_output = raw_outputs[prediction_idx]
-                final_answer = self.extract_final_answer(raw_output)
-                if self.custom_func:
-                    bboxes = self.custom_func(raw_output)
+            # Process results - need to align with original batch_data indices
+            batch_results = []
+            prediction_idx = 0
+
+            for i in range(len(batch_data)):
+                if i in valid_indices:
+                    # This item was processed successfully
+                    raw_output = raw_outputs[prediction_idx]
+                    final_answer = self.extract_final_answer(raw_output)
+                    if self.custom_func:
+                        bboxes = self.custom_func(raw_output)
+                    else:
+                        bboxes = []
+                    batch_results.append({
+                        "raw_output": raw_output,
+                        "final_answer": final_answer,
+                        "bboxes": bboxes,
+                        "success": True,
+                        "error": None
+                    })
+                    prediction_idx += 1
                 else:
                     bboxes = []
                 batch_results.append({
@@ -225,6 +190,70 @@ class VLLMEvaluator:
         #     # Return error for all items in batch
         #     return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": str(e)} for _ in batch_data]
 
+    def load_benchmark_dataset(self, config: str, limit: Optional[int] = None, random_seed: int = 42) -> List[Dict]:
+        """Load dataset for a specific benchmark"""
+        
+        if config['dataset_name'].endswith('.jsonl'):
+            return load_grit_jsonl_dataset(config)
+
+        if config.get('requires_merge', False):
+            # Special handling for GQA - merge instructions and images
+            instructions_dataset = load_dataset(
+                config['dataset_name'], 
+                config['dataset_config'], 
+                split=config['split']
+            )
+            images_dataset = load_dataset(
+                config['dataset_name'], 
+                config['images_config'], 
+                split=config['split']
+            )
+            
+            # Create a mapping from image id to image
+            image_map = {item['id']: item['image'] for item in images_dataset}
+            
+            # Merge datasets by adding images to instructions
+            merged_data = []
+            for item in instructions_dataset:
+                image_id = item[config['image_id_key']]
+                if image_id in image_map:
+                    merged_item = dict(item)
+                    merged_item[config['image_key']] = image_map[image_id]
+                    merged_data.append(merged_item)
+            
+            # Convert back to dataset format
+            dataset = Dataset.from_list(merged_data)
+            
+        elif 'dataset_config' in config and config['dataset_config']:
+            # Load with specific configuration
+            if config['split']:
+                dataset = load_dataset(config['dataset_name'], config['dataset_config'], split=config['split'])
+            else:
+                # For datasets where split is included in config name
+                dataset = load_dataset(config['dataset_name'], config['dataset_config'])
+        else:
+            # Load without configuration (original behavior)
+            dataset = load_dataset(config['dataset_name'], split=config['split'])
+        
+        
+        if limit:
+            # Set random seed for consistent sampling
+            np.random.seed(random_seed)
+            random.seed(random_seed)
+            
+            total_samples = len(dataset)
+            if limit >= total_samples:
+                logger.info(f"Limit ({limit}) >= dataset size ({total_samples}), using all samples")
+            else:
+                # Generate random indices without replacement
+                random_indices = np.random.choice(total_samples, size=limit, replace=False)
+                random_indices = sorted(random_indices.tolist())
+                dataset = dataset.select(random_indices)
+                logger.info(f"Randomly sampled {limit} samples from {total_samples} total samples (seed: {random_seed})")
+        
+        logger.info(f"Dataset loaded: {len(dataset)} samples")
+        return dataset
+
     def evaluate_benchmark(self, 
                           benchmark: str,
                           limit: int = None,
@@ -243,65 +272,7 @@ class VLLMEvaluator:
             logger.info(f"Dataset: {config['dataset_name']}, Split: {config['split']}")
         
         # Load dataset
-        try:
-            if config.get('requires_merge', False):
-                # Special handling for GQA - merge instructions and images
-                instructions_dataset = load_dataset(
-                    config['dataset_name'], 
-                    config['dataset_config'], 
-                    split=config['split']
-                )
-                images_dataset = load_dataset(
-                    config['dataset_name'], 
-                    config['images_config'], 
-                    split=config['split']
-                )
-                
-                # Create a mapping from image id to image
-                image_map = {item['id']: item['image'] for item in images_dataset}
-                
-                # Merge datasets by adding images to instructions
-                merged_data = []
-                for item in instructions_dataset:
-                    image_id = item[config['image_id_key']]
-                    if image_id in image_map:
-                        merged_item = dict(item)
-                        merged_item[config['image_key']] = image_map[image_id]
-                        merged_data.append(merged_item)
-                
-                # Convert back to dataset format
-                from datasets import Dataset
-                dataset = Dataset.from_list(merged_data)
-                
-            elif 'dataset_config' in config and config['dataset_config']:
-                # Load with specific configuration
-                if config['split']:
-                    dataset = load_dataset(config['dataset_name'], config['dataset_config'], split=config['split'])
-                else:
-                    # For datasets where split is included in config name
-                    dataset = load_dataset(config['dataset_name'], config['dataset_config'])
-            else:
-                # Load without configuration (original behavior)
-                dataset = load_dataset(config['dataset_name'], split=config['split'])
-            if limit:
-                # Set random seed for consistent sampling
-                np.random.seed(random_seed)
-                random.seed(random_seed)
-                
-                total_samples = len(dataset)
-                if limit >= total_samples:
-                    logger.info(f"Limit ({limit}) >= dataset size ({total_samples}), using all samples")
-                else:
-                    # Generate random indices without replacement
-                    random_indices = np.random.choice(total_samples, size=limit, replace=False)
-                    random_indices = sorted(random_indices.tolist())
-                    dataset = dataset.select(random_indices)
-                    logger.info(f"Randomly sampled {limit} samples from {total_samples} total samples (seed: {random_seed})")
-            
-            logger.info(f"Dataset loaded: {len(dataset)} samples")
-        except Exception as e:
-            logger.error(f"Error loading dataset: {e}")
-            return {"error": str(e)}
+        dataset = self.load_benchmark_dataset(config, limit, random_seed)
         
         # Create output directory
         os.makedirs(output_dir, exist_ok=True)
