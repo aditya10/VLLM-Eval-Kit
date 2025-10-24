@@ -65,46 +65,62 @@ def parse_bounding_boxes(output: str):
     return bboxes
 
 sg_prompt_suffix = (
-    """Please generate a scene graph and Answer the Question based on the scene graph. 
-    List the main objects, their bounding boxes and how they relate to each other. 
-    "Generate a scene graph for this image in JSON format with the following structure:
-    {
-        "objects": [
-            {
-                "id": "obj1",
-                "name": "object_name",
-                "bbox": "bounding box coordinates"
-            }
-        ],
-        "relationships": [
-            {
-                "subject": "obj1",
-                "predicate": "relationship_type",
-                "object": "obj2"
-            }
-        ],
-    }
-    
-    Then, based on the scene graph, answer the question.\n
-    OUTPUT FORMAT:
-    Question: {question}
-    JSON Scene Graph:
-    Answer:
-    """
-)
+                    " Please generate a scene graph and Answer the Question based on the scene graph. "
+                    "List all objects, their bounding boxes and how they relate to each other. "
+                    "Generate a scene graph for this image in JSON format with the following structure:\n"
+                    "{\n"
+                    '    "objects": [\n'
+                    "        {\n"
+                    '            "id": "obj1",\n'
+                    '            "name": "object_name",\n'
+                    '            "bbox": "bounding box coordinates"\n'
+                    "        }\n"
+                    "    ],\n"
+                    '    "relationships": [\n'
+                    "        {\n"
+                    '            "subject": "obj1",\n'
+                    '            "predicate": "relationship_type",\n'
+                    '            "object": "obj2"\n'
+                    "        }\n"
+                    "    ]\n"
+                    "}\n"
+                    "\n"
+                    "Then, based on the scene graph, answer the question in single word or phrase.\n"
+                    "OUTPUT FORMAT:\n"
+                    "Question: {question}\n"
+                    "JSON Scene Graph:\n"
+                    "<answer>:"
+                )
 
 def sg_ans_extractor(raw_output):
     
-    """Extract the final answer from GRIT's structured output"""
-    # Look for answer after <answer> tag
-    answer_match = re.search(r'Answer\s*(.*?)(?:\s*$)', raw_output, re.DOTALL | re.IGNORECASE)
-
+    """Extract the final answer from scene graph structured output"""
+    # Debug: print what we're trying to parse
+    print(f"DEBUG sg_ans_extractor input: '{raw_output}'")
+    
+    # Look for "answer": "value" pattern (with quotes)
+    answer_match = re.search(r'"answer"\s*:\s*"([^"]*)"', raw_output, re.IGNORECASE)
+    if answer_match:
+        result = answer_match.group(1).strip()
+        print(f"DEBUG extracted answer from quotes: '{result}'")
+        return result
+    
+    # Look for "answer": value pattern (without quotes)
+    answer_match = re.search(r'"answer"\s*:\s*([^,\n}]+)', raw_output, re.IGNORECASE)
+    if answer_match:
+        result = answer_match.group(1).strip()
+        print(f"DEBUG extracted answer without quotes: '{result}'")
+        return result
+    
+    # Fallback: Look for answer after "Answer:" (with colon)
+    answer_match = re.search(r'Answer:\s*(.+)', raw_output, re.IGNORECASE)
     if answer_match:
         return answer_match.group(1).strip()
-    else:
-        answer_match = re.search(r'Answer\s*(.*?)(?:\s*$)', raw_output, re.DOTALL | re.IGNORECASE)
-        if answer_match:
-            return answer_match.group(1).strip()
+    
+    # Fallback: try without colon
+    answer_match = re.search(r'Answer\s+(.+)', raw_output, re.IGNORECASE)
+    if answer_match:
+        return answer_match.group(1).strip()
     
     # If no structured output found, return the full output
     return raw_output.strip() 
@@ -138,7 +154,9 @@ def create_prompt(task: str, question: str, post_prompt: str = "") -> str:
     elif task == "grit":
         return f"Question: {question}{prompt_suffix}{post_prompt}\n"
     elif task == "sg": # POST PROMPT IGNORED FOR SG
-        return "Question: "+prompt_suffix.format(question=question)
+        #return "Question: "+prompt_suffix.format(question=question)
+        #import pdb; pdb.set_trace()
+        return f"Question: {question}" + prompt_suffix
 
 
 
