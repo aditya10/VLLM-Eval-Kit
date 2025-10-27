@@ -80,23 +80,23 @@ class BenchmarkConfig:
             'description': 'OK-VQA val2014 dataset'
         },
         'grit_vsr': {
-            'dataset_name': './datasets/vsr_val.jsonl',
+            'dataset_name': '/home/mila/c/chandhos/scratch/data_cot/GRIT_data/vsr_val.jsonl',
             'split': 'val',
             'question_key': 'question',
             'image_key': 'image',
             'answer_key': 'answer',
-            'img_folder': '/home/aditya10/scratch/vsr_images/images',
+            'img_folder': '/home/mila/c/chandhos/scratch/data_cot/GRIT_data/vsr',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
             'metric': 'exact_match',
             'description': 'VSR Val dataset'
         },
         'grit_tallyqa': {
-            'dataset_name': './datasets/tallyqa_val.jsonl',
+            'dataset_name': '/home/mila/c/chandhos/scratch/data_cot/GRIT_data/tallyqa_val.jsonl',
             'split': 'val',
             'question_key': 'question',
             'image_key': 'image',
             'answer_key': 'answer',
-            'img_folder': '/datasets/VisualGenome',
+            'img_folder': '/home/mila/c/chandhos/scratch/data_cot/GRIT_data/tallyqa',
             'post_prompt': '\nAnswer the question using a single word or phrase.',
             'metric': 'exact_match',
             'description': 'TallyQA Val dataset'

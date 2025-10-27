@@ -12,7 +12,6 @@ import os
 from typing import List, Dict, Any, Optional, Union
 from datasets import load_dataset, Dataset
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
-#from transformers.modeling_utils import VLMS
 from tqdm import tqdm
 import argparse
 from datetime import datetime
@@ -79,17 +78,10 @@ class VLLMEvaluator:
             self.model.generation_config.top_k = 1
             self.model.generation_config.top_p = 0.0
         if task == "sg":
-            self.model.generation_config.max_new_tokens = 380
+            self.model.generation_config.max_new_tokens = 400
             self.model.generation_config.temperature = 0.001
             self.model.generation_config.top_k = 1
             self.model.generation_config.top_p = 0.0
-            #self.model.generation_config.use_cache = False
-        if task == "vanilla":
-            self.model.generation_config.max_new_tokens = 380
-            self.model.generation_config.temperature = 0.001
-            self.model.generation_config.top_k = 1
-            self.model.generation_config.top_p = 0.0
-            #self.model.generation_config.use_cache = False
 
         # Load custom prompts and extractors
         if task not in PROMPTS_EXTRACTS:
@@ -107,33 +99,74 @@ class VLLMEvaluator:
         if not batch_data:
             return []
         
-        
-        texts = []
-        images = []
-        valid_indices = []  # Track which original items are valid
-        
-        # Prepare batch
-        for i, item in enumerate(batch_data):
-            image = item["image"]
-            question = item["question"]
+        try:
+            texts = []
+            images = []
+            valid_indices = []  # Track which original items are valid
             
-            if image is None or not question:
-                continue
-            #import pdb; pdb.set_trace()
-            prompt_text = create_prompt(self.task, question, post_prompt)
+            # Prepare batch
+            for i, item in enumerate(batch_data):
+                image = item["image"]
+                question = item["question"]
+                
+                if image is None or not question:
+                    continue
+                
+                prompt_text = create_prompt(self.task, question, post_prompt)
+                
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "image", "image": image},
+                            {"type": "text", "text": prompt_text},
+                        ],
+                    }
+                ]
+                
+                chat_text = self.processor.apply_chat_template(
+                    messages, tokenize=False, add_generation_prompt=True
+                )
+                
+                texts.append(chat_text)
+                images.append(image)
+                valid_indices.append(i)
             
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "image", "image": image},
-                        {"type": "text", "text": prompt_text},
-                    ],
-                }
-            ]
+            if not texts:
+                # Return error results for all items if none are valid
+                return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": "Invalid image or question"} for _ in batch_data]
             
-            chat_text = self.processor.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=True
+            # Process all images efficiently for batch
+            batch_messages = []
+            for i, (image, text) in enumerate(zip(images, texts)):
+                batch_messages.append({
+                    "role": "user", 
+                    "content": [{"type": "image", "image": image}, {"type": "text", "text": text}]
+                })
+            
+            # Process vision info for all images at once
+            all_img_inputs = []
+            for msg in batch_messages:
+                img_inputs, _ = process_vision_info([msg])
+                all_img_inputs.extend(img_inputs if img_inputs else [])
+            
+            # Batch processing
+            inputs = self.processor(
+                text=texts,
+                images=all_img_inputs if all_img_inputs else None,
+                padding=True,
+                return_tensors="pt",
+            ).to(self.model.device)
+            
+            # Generate responses in batch
+            with torch.inference_mode():
+                gen_ids = self.model.generate(**inputs, generation_config=self.model.generation_config)
+            
+            # Decode all outputs
+            raw_outputs = self.processor.batch_decode(
+                gen_ids[:, inputs.input_ids.shape[1]:],
+                skip_special_tokens=True,
+                clean_up_tokenization_spaces=False,
             )
             
             # Process results - need to align with original batch_data indices
@@ -158,37 +191,27 @@ class VLLMEvaluator:
                     })
                     prediction_idx += 1
                 else:
-                    bboxes = []
-                batch_results.append({
-                    "raw_output": raw_output,
-                    "final_answer": final_answer,
-                    "bboxes": bboxes,
-                    "success": True,
-                    "error": None
-                })
-                prediction_idx += 1
-            else:
-                # This item was skipped due to invalid image/question
-                batch_results.append({
-                    "raw_output": "",
-                    "final_answer": "",
-                    "bboxes": [],
-                    "success": False,
-                    "error": "Invalid image or question"
-                })
-        
-        # Clear GPU memory
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
-        return batch_results
-        
-        # except Exception as e:
-        #     logger.error(f"Error in batch prediction: {e}")
-        #     # Clear GPU memory on error
-        #     if torch.cuda.is_available():
-        #         torch.cuda.empty_cache()
-        #     # Return error for all items in batch
-        #     return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": str(e)} for _ in batch_data]
+                    # This item was skipped due to invalid image/question
+                    batch_results.append({
+                        "raw_output": "",
+                        "final_answer": "",
+                        "bboxes": [],
+                        "success": False,
+                        "error": "Invalid image or question"
+                    })
+            
+            # Clear GPU memory
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            return batch_results
+            
+        except Exception as e:
+            logger.error(f"Error in batch prediction: {e}")
+            # Clear GPU memory on error
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            # Return error for all items in batch
+            return [{"raw_output": "", "final_answer": "", "bboxes": [], "success": False, "error": str(e)} for _ in batch_data]
 
     def load_benchmark_dataset(self, config: str, limit: Optional[int] = None, random_seed: int = 42) -> List[Dict]:
         """Load dataset for a specific benchmark"""
@@ -356,7 +379,7 @@ class VLLMEvaluator:
                 results.append(result)
             
             # Print progress
-            if (batch_idx + 1) % 1 == 0:
+            if (batch_idx + 1) % 5 == 0:
                 accuracy = correct_predictions / total_predictions if total_predictions > 0 else 0
                 logger.info(f"Progress: {batch_idx+1}/{len(batches)} batches, Accuracy so far: {accuracy:.4f}")
         
